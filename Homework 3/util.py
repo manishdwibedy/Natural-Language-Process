@@ -9,6 +9,10 @@ def changeToPresentDirectory():
 
 
 def getCurrentPath():
+    '''
+    Returning the current directory
+    :return: The current directory
+    '''
     return os.getcwd()
 
 if __name__ == '__main__':
