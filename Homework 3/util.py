@@ -38,7 +38,7 @@ def readData(filename):
 
     with open(path) as file:
         for line in file:
-            fileContents.append(line)
+            fileContents.append(line[:-1])
 
     return fileContents
 
