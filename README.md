@@ -1,4 +1,4 @@
-`This is the homework assignment for CSCI 544 — Applied Natural Language Processing, Spring 2016.`
+This is the homework assignment for CSCI 544 — Applied Natural Language Processing, Spring 2016.
 
 Homework Description:
 
