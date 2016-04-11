@@ -42,8 +42,33 @@ def readData(filename):
 
     return fileContents
 
+def getTaggedWords(filename):
+    '''
+    Getting all the tagged information for the data file
+    :param filename: Name of the data file
+    :return: Currently nothing
+    '''
+
+
+    # Getting all the content of the file
+    fileContents = readData(filename)
+
+    # For every sentence in the file
+    for sentance in fileContents:
+
+        # Split using space as a delimiter, as per the homework doc
+        # A file with tagged training data in the word/TAG format,
+        # with words separated by 'spaces' and each sentence on a new line.
+        tagged_words = sentance.split(' ')
+
+        for tagged_word in tagged_words:
+            # Extracting the word and te tag using the '/' character
+            tag = tagged_word.split('/')
+
+            pass
+
 
 if __name__ == '__main__':
     # changeToPresentDirectory()
     # print getCurrentPath()
-    print readData('catalan_corpus_dev_tagged.txt')
+    getTaggedWords(constant.DEV_TAGGED_DATA)
