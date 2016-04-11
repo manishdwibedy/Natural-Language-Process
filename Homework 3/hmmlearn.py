@@ -74,13 +74,17 @@ def getTransitionCount(tag_info):
     """
     Compute the transition probability
     :param tag_info: the tag information
-    :return: a dictionary with key as 'prev-curr' and the value is an object {previous, current, count}
+    :return: a dictionary with key as 'curr' and the value is an dict as prev and count
     """
 
     transitionProb = {}
 
+    count = 0
     # For every set of tags for a sentence
     for tags in tag_info:
+
+        # print 'Reading sentence : ' + str(count)
+        count += 1
 
         # Initialize the previous and current tag to empty string
         prev = ''
@@ -92,19 +96,31 @@ def getTransitionCount(tag_info):
 
             # Would cover the first tag
             if prev != '':
-                key =  prev + '-' + curr
+                # Already seen the current tag
+                if curr in transitionProb:
+                    # Get the transitions to the curr tag
+                    transition_array = transitionProb[curr]
 
-                if key in transitionProb:
-                    transition = transitionProb[key]
-                    transition['count'] += 1
-                    transitionProb[key] = transition
+                    # Loop over the transitions
+
+                    index = getPreviousTagIndex(prev, transition_array)
+                    if index > -1:
+                        prevTagInfo = transition_array[index]
+                        prevTagInfo['count'] += 1
+                    else:
+                        transition = {
+                            'previous': prev,
+                            'count': 1
+                        }
+                        transition_array.append(transition)
+                        transitionProb[curr] = transition_array
                 else:
                     transition = {
                         'previous': prev,
-                        'current': curr,
                         'count': 1
                     }
-                    transitionProb[key] = transition
+                    transition_array = [transition]
+                    transitionProb[curr] = transition_array
                 # Store the current to the previous
                 prev = curr
                 continue
@@ -115,6 +131,21 @@ def getTransitionCount(tag_info):
                 curr = ''
 
     return transitionProb
+
+def getPreviousTagIndex(previous, transition_array):
+    """
+    Find the index in the transition array. If the previous tag is not present, returning -1
+    :param previous: the previous tag, being searched
+    :param transition_array: the transition array
+    :return: the index in the transition array
+    """
+    index = 0
+
+    for previousTagInfo in transition_array:
+        if previousTagInfo['previous'] == previous:
+            return index
+        index += 1
+    return -1
 
 if __name__ == '__main__':
     start = datetime.datetime.now()
