@@ -123,7 +123,7 @@ if __name__ == '__main__':
     starting_tag_count = getStartingTagCount(tag_info)
     if isStartProbCorrect(tag_info, starting_tag_count):
         starting_prob = getStartProb(starting_tag_count, len(tag_info))
-        transition_prob = getTransitionCount(tag_info)
+        transition_count = getTransitionCount(tag_info)
         pass
     else:
         raise ValueError('Missed')
