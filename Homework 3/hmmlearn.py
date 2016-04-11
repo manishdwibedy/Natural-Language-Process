@@ -11,6 +11,11 @@ def getTagInfo(filename):
     return util.getTaggedWords(filename)
 
 def getStartingTagCount(tag_info):
+    """
+    Getting the count of the starting tag count
+    :param tag_info: the tag information list
+    :return: a dict containing the count of starting TAG
+    """
     starting_prob = {}
     index = 0
     for sentence in tag_info:
