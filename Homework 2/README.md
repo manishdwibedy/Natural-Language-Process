@@ -1,4 +1,4 @@
-Naive Bayes Classifier for classification of hotel reviews.
+**Naive Bayes Classifier for classification of hotel reviews.**
 
 In this assignment you will write a naive Bayes classifier to identify hotel reviews as either truthful or deceptive, and either positive or negative. 
 
