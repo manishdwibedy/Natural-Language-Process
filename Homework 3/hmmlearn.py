@@ -70,6 +70,38 @@ def getStartProb(start_prob, totalCount):
         starting_prob[tag] = count/totalCount
     return starting_prob
 
+def getTransitionCount(tag_info):
+    """
+    Compute the transition probability
+    :param tag_info: the tag information
+    :return: Currently nothing
+    """
+
+    # For every set of tags for a sentence
+    for tags in tag_info:
+
+        # Initialize the previous and current tag to empty string
+        prev = ''
+        curr = ''
+
+        for tag in tags:
+            # Store the tag to the current tag
+            curr = tag['tag']
+
+            # Would cover the first tag
+            if prev != '':
+                print prev + '-' + curr
+                # Store the current to the previous
+                prev = curr
+                continue
+            else:
+                # Store the current to the previous
+                prev = curr
+                # Clear the current
+                curr = ''
+
+    pass
+
 if __name__ == '__main__':
     start = datetime.datetime.now()
 
@@ -77,6 +109,7 @@ if __name__ == '__main__':
     starting_tag_count = getStartingTagCount(tag_info)
     if isStartProbCorrect(tag_info, starting_tag_count):
         starting_prob = getStartProb(starting_tag_count, len(tag_info))
+        getTransitionCount(tag_info)
     else:
         raise ValueError('Missed')
 
