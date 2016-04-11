@@ -46,9 +46,9 @@ def getTaggedWords(filename):
     '''
     Getting all the tagged information for the data file
     :param filename: Name of the data file
-    :return: Currently nothing
+    :return: the tag information
     '''
-
+    tag_info_list = []
 
     # Getting all the content of the file
     fileContents = readData(filename)
@@ -65,10 +65,15 @@ def getTaggedWords(filename):
             # Extracting the word and te tag using the '/' character
             tag = tagged_word.split('/')
 
-            pass
+            tag_info = {
+                'word': tag[0],
+                'tag': tag[1]
+            }
+            tag_info_list.append(tag_info)
+    return tag_info_list
 
 
 if __name__ == '__main__':
     # changeToPresentDirectory()
     # print getCurrentPath()
-    getTaggedWords(constant.DEV_TAGGED_DATA)
+    print getTaggedWords(constant.DEV_TAGGED_DATA)
