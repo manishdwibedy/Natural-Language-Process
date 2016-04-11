@@ -74,8 +74,10 @@ def getTransitionCount(tag_info):
     """
     Compute the transition probability
     :param tag_info: the tag information
-    :return: Currently nothing
+    :return: a dictionary with key as 'prev-curr' and the value is an object {previous, current, count}
     """
+
+    transitionProb = {}
 
     # For every set of tags for a sentence
     for tags in tag_info:
@@ -90,7 +92,19 @@ def getTransitionCount(tag_info):
 
             # Would cover the first tag
             if prev != '':
-                print prev + '-' + curr
+                key =  prev + '-' + curr
+
+                if key in transitionProb:
+                    transition = transitionProb[key]
+                    transition['count'] += 1
+                    transitionProb[key] = transition
+                else:
+                    transition = {
+                        'previous': prev,
+                        'current': curr,
+                        'count': 1
+                    }
+                    transitionProb[key] = transition
                 # Store the current to the previous
                 prev = curr
                 continue
@@ -100,7 +114,7 @@ def getTransitionCount(tag_info):
                 # Clear the current
                 curr = ''
 
-    pass
+    return transitionProb
 
 if __name__ == '__main__':
     start = datetime.datetime.now()
@@ -109,7 +123,8 @@ if __name__ == '__main__':
     starting_tag_count = getStartingTagCount(tag_info)
     if isStartProbCorrect(tag_info, starting_tag_count):
         starting_prob = getStartProb(starting_tag_count, len(tag_info))
-        getTransitionCount(tag_info)
+        transition_prob = getTransitionCount(tag_info)
+        pass
     else:
         raise ValueError('Missed')
 
