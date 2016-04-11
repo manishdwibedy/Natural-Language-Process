@@ -12,15 +12,19 @@ def getTagInfo(filename):
 
 def getStartingProb(tag_info):
     starting_prob = {}
+    index = 0
     for sentence in tag_info:
         startingTagInfo = sentence[0]
 
         tag = startingTagInfo['tag']
 
+        if len(tag) != 2:
+            print 'Not a two letter tag'
         if tag in starting_prob:
             starting_prob[tag] += 1
         else:
             starting_prob[tag] = 1
+        index += 1
     return starting_prob
 
 if __name__ == '__main__':
