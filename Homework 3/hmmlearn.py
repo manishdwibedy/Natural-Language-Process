@@ -147,15 +147,60 @@ def getPreviousTagIndex(previous, transition_array):
         index += 1
     return -1
 
+def getWordCount(tag_info):
+    """
+    Count the words in the data file
+    :param tag_info: the tag information
+    :return: number of words in the data file
+    """
+    count = 0
+    for sentence in tag_info:
+        count += len(sentence)
+        pass
+    return count
+
+def getTransitionCountList(transition_count):
+    """
+    Counting the number of transtion in the transition_count
+    :param transition_count: the transition dictionary
+    :return: number of transitions
+    """
+    count = 0
+    for curr, previousInfoList in transition_count.iteritems():
+        for previousObj in previousInfoList:
+            count += previousObj['count']
+    return count
+
 if __name__ == '__main__':
     start = datetime.datetime.now()
 
+    # Tag Information
     tag_info = getTagInfo(constant.DEV_TAGGED_DATA)
+
+    # First Tag Count
     starting_tag_count = getStartingTagCount(tag_info)
+
+    # If we found the correct number of starting tag
     if isStartProbCorrect(tag_info, starting_tag_count):
+
+        # Starting Probability
         starting_prob = getStartProb(starting_tag_count, len(tag_info))
+
+        # Transition Count
         transition_count = getTransitionCount(tag_info)
-        pass
+
+        # Total number of words
+        word_count = getWordCount(tag_info)
+
+        # Total number of transitions
+        transition_count = getTransitionCountList(transition_count)
+
+        # Expected number of transitions
+        expected_transition = word_count - len(tag_info)
+
+        # If missed any transitions!
+        if expected_transition != transition_count:
+            raise ValueError('Missing transition count!')
     else:
         raise ValueError('Missed')
 
