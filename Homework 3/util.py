@@ -64,14 +64,18 @@ def getTaggedWords(filename):
 
         for tagged_word in tagged_words:
             # Extracting the word and te tag using the '/' character
-            tag = tagged_word.split('/')
+            word = tagged_word[:tagged_word.rfind('/')]
+            tag = tagged_word[tagged_word.rfind('/')+1:]
 
             if len(tag) == 2:
                 tag_info = {
-                    'word': tag[0],
-                    'tag': tag[1]
+                    'word': word,
+                    'tag': tag
                 }
                 tag_info_sentence.append(tag_info)
+            else:
+                print 'Error : Getting wrong tag'
+
         tag_info_list.append(tag_info_sentence)
     return tag_info_list
 
