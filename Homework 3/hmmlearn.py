@@ -18,8 +18,6 @@ def getStartingProb(tag_info):
 
         tag = startingTagInfo['tag']
 
-        if len(tag) != 2:
-            print 'Not a two letter tag'
         if tag in starting_prob:
             starting_prob[tag] += 1
         else:
