@@ -66,11 +66,12 @@ def getTaggedWords(filename):
             # Extracting the word and te tag using the '/' character
             tag = tagged_word.split('/')
 
-            tag_info = {
-                'word': tag[0],
-                'tag': tag[1]
-            }
-            tag_info_sentence.append(tag_info)
+            if len(tag) == 2:
+                tag_info = {
+                    'word': tag[0],
+                    'tag': tag[1]
+                }
+                tag_info_sentence.append(tag_info)
         tag_info_list.append(tag_info_sentence)
     return tag_info_list
 
