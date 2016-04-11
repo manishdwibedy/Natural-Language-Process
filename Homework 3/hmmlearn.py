@@ -55,13 +55,30 @@ def isStartProbCorrect(tag_info, start_prob):
     else:
         return True
 
+def getStartProb(start_prob, totalCount):
+    """
+    Computing the starting probability
+    :param start_prob: the dict representing the tag with the count
+    :param totalCount: the total number of sentences in the data file
+    :return: a dict representing the tag with their probability
+    """
+    starting_prob = {}
+
+    totalCount = float(totalCount)
+
+    for tag, count in start_prob.iteritems():
+        starting_prob[tag] = count/totalCount
+    return starting_prob
+
 if __name__ == '__main__':
     start = datetime.datetime.now()
 
     tag_info = getTagInfo(constant.DEV_TAGGED_DATA)
-    starting_prob = getStartingTagCount(tag_info)
-    if isStartProbCorrect(tag_info, starting_prob):
-        pass
+    starting_tag_count = getStartingTagCount(tag_info)
+    if isStartProbCorrect(tag_info, starting_tag_count):
+        starting_prob = getStartProb(starting_tag_count, len(tag_info))
+    else:
+        raise ValueError('Missed')
 
     end = datetime.datetime.now()
     print 'Took ' + str(end-start) + ' time.'
