@@ -18,6 +18,10 @@ def getStartingProb(tag_info):
 
         tag = startingTagInfo['tag']
 
+        # Raise an exception, if the length of the tag is not 2
+        if len(tag) != 2:
+            raise ValueError('The length of the tag is not 2')
+
         if tag in starting_prob:
             starting_prob[tag] += 1
         else:
