@@ -2,33 +2,33 @@ import os
 import constant
 
 def changeToPresentDirectory():
-    '''
+    """
     Changing to the current directory.
     :return:
-    '''
+    """
     os.path.abspath(os.curdir)
 
 
 def getCurrentPath():
-    '''
+    """
     Returning the current directory
     :return: The current directory
-    '''
+    """
     return os.getcwd()
 
 def getDataDirectory():
-    '''
+    """
     Getting the data directory
     :return: Returns the data directory's absolute path
-    '''
+    """
     return os.path.join(getCurrentPath(), constant.DATA_DIR)
 
 def readData(filename):
-    '''
+    """
     Readging the data file, specified by the filename
     :param filename: The filename to be read
     :return: A list containing every line in the file
-    '''
+    """
 
     # File Content list
     fileContents = []
@@ -43,11 +43,11 @@ def readData(filename):
     return fileContents
 
 def getTaggedWords(filename):
-    '''
+    """
     Getting all the tagged information for the data file
     :param filename: Name of the data file
     :return: the tag information
-    '''
+    """
     tag_info_list = []
 
     # Getting all the content of the file
