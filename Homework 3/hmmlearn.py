@@ -10,7 +10,7 @@ def getTagInfo(filename):
     """
     return util.getTaggedWords(filename)
 
-def getStartingProb(tag_info):
+def getStartingTagCount(tag_info):
     starting_prob = {}
     index = 0
     for sentence in tag_info:
@@ -29,7 +29,7 @@ def getStartingProb(tag_info):
         index += 1
     return starting_prob
 
-def ifStartProbCorrect(tag_info, start_prob):
+def isStartProbCorrect(tag_info, start_prob):
     """
     Checking if any starting probability is missed or added extra
     :param tag_info: the tag info list
@@ -54,8 +54,9 @@ if __name__ == '__main__':
     start = datetime.datetime.now()
 
     tag_info = getTagInfo(constant.DEV_TAGGED_DATA)
-    starting_prob = getStartingProb(tag_info)
-    ifStartProbCorrect(tag_info, starting_prob)
+    starting_prob = getStartingTagCount(tag_info)
+    if isStartProbCorrect(tag_info, starting_prob):
+        pass
 
     end = datetime.datetime.now()
     print 'Took ' + str(end-start) + ' time.'
