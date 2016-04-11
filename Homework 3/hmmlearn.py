@@ -1,5 +1,6 @@
 import util
 import constant
+import datetime
 
 def getTagInfo(filename):
     """
@@ -10,5 +11,8 @@ def getTagInfo(filename):
     return util.getTaggedWords(filename)
 
 if __name__ == '__main__':
+    start = datetime.datetime.now()
     tag_info = getTagInfo(constant.DEV_TAGGED_DATA)
+    end = datetime.datetime.now()
+    print 'Took ' + str(end-start) + ' time.'
 
