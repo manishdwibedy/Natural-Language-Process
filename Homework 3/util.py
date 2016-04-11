@@ -56,6 +56,7 @@ def getTaggedWords(filename):
     # For every sentence in the file
     for sentance in fileContents:
 
+        tag_info_sentence = []
         # Split using space as a delimiter, as per the homework doc
         # A file with tagged training data in the word/TAG format,
         # with words separated by 'spaces' and each sentence on a new line.
@@ -69,11 +70,13 @@ def getTaggedWords(filename):
                 'word': tag[0],
                 'tag': tag[1]
             }
-            tag_info_list.append(tag_info)
+            tag_info_sentence.append(tag_info)
+        tag_info_list.append(tag_info_sentence)
     return tag_info_list
 
 
 if __name__ == '__main__':
     # changeToPresentDirectory()
     # print getCurrentPath()
-    print getTaggedWords(constant.DEV_TAGGED_DATA)
+    tag_info = getTaggedWords(constant.DEV_TAGGED_DATA)
+    pass
