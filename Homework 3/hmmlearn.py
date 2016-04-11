@@ -29,11 +29,33 @@ def getStartingProb(tag_info):
         index += 1
     return starting_prob
 
+def ifStartProbCorrect(tag_info, start_prob):
+    """
+    Checking if any starting probability is missed or added extra
+    :param tag_info: the tag info list
+    :param start_prob: the dict representing the tag with count
+    :return:
+    """
+    sentence_count = len(tag_info)
+    tag_count = 0
+    for tag, count in start_prob.iteritems():
+        tag_count += count
+
+    if sentence_count < tag_count:
+        # Missing starting probability
+        return False
+    elif tag_count > sentence_count:
+        # Missed tag information
+        return False
+    else:
+        return True
+
 if __name__ == '__main__':
     start = datetime.datetime.now()
 
     tag_info = getTagInfo(constant.DEV_TAGGED_DATA)
     starting_prob = getStartingProb(tag_info)
+    ifStartProbCorrect(tag_info, starting_prob)
 
     end = datetime.datetime.now()
     print 'Took ' + str(end-start) + ' time.'
