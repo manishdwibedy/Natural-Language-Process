@@ -2,6 +2,7 @@ import pickle
 import util
 import constant
 import datetime
+import sys
 
 def getHMMModel(filename):
     """
@@ -135,9 +136,15 @@ def writeOutput(tagged_sentences):
     pass
 if __name__ == '__main__':
     start = datetime.datetime.now()
+
+    num_of_args = len(sys.argv)
+
+    if num_of_args == 2:
+        filename = sys.argv[1]
+
     starting_prob, transition_prob, emission_prob = getHMMModel('hmm_model.txt')
 
-    file_contents = util.getUntaggedWords(constant.RAW_DATA)
+    file_contents = util.getUntaggedWords(filename)
     tagged_sentences = tagData(starting_prob, transition_prob, emission_prob, file_contents)
 
     true_value = util.getTaggedWords(constant.DEV_TAGGED_DATA)
