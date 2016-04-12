@@ -87,6 +87,27 @@ def tagData(starting_prob, transition_prob, emission_prob, file_contents):
         tagged_sentences.append(tagged_sentence)
     return tagged_sentences
 
+def getDiff(tagged_sentences, true_value):
+
+    correctTag = 0
+    wrongTag = 0
+    sentenceIndex = 0
+    for sentence in true_value:
+        wordIndex = 0
+        for word in sentence:
+
+            true_tag = word['tag']
+            tag_assigned = tagged_sentences[sentenceIndex][wordIndex]['tag']
+
+            if true_tag == tag_assigned:
+                correctTag += 1
+            else:
+                wrongTag += 1
+            wordIndex += 1
+        sentenceIndex += 1
+    pass
+
+
 if __name__ == '__main__':
     starting_prob, transition_prob, emission_prob = getHMMModel('hmm_model.txt')
 
@@ -94,4 +115,6 @@ if __name__ == '__main__':
     tagged_sentences = tagData(starting_prob, transition_prob, emission_prob, file_contents)
 
     true_value = util.getTaggedWords(constant.DEV_TAGGED_DATA)
+
+    getDiff(tagged_sentences, true_value)
     pass
