@@ -318,11 +318,11 @@ if __name__ == '__main__':
             if word_count == total_emmission_count:
                 pass
             else:
-                raise ValueError('Error in calculation emmissions')
+                raise ValueError('Error in calculation of emmission probilities')
         else:
-            raise ValueError('Missing transition count!')
+            raise ValueError('Error in calculation of the transitions probabilities')
     else:
-        raise ValueError('Missed')
+        raise ValueError('Error in calculation of starting probabilities')
 
     end = datetime.datetime.now()
     print 'Took ' + str(end-start) + ' time.'
