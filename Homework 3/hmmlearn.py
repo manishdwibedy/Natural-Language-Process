@@ -317,7 +317,7 @@ if __name__ == '__main__':
     start = datetime.datetime.now()
 
     # Tag Information
-    tag_info = getTagInfo(constant.DEV_TAGGED_DATA)
+    tag_info = getTagInfo(constant.TRAINING_TAGGED_DATA)
 
     # First Tag Count
     starting_tag_count = getStartingTagCount(tag_info)
