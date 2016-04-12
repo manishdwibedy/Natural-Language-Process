@@ -42,6 +42,18 @@ def readData(filename):
 
     return fileContents
 
+def getUntaggedWords(filename):
+    untagged_words_list = []
+    # Getting all the content of the file
+    fileContents = readData(filename)
+
+    # For every sentence in the file
+    for sentance in fileContents:
+        untagged_words = sentance.split(' ')
+        untagged_words_list.append(untagged_words)
+
+    return untagged_words_list
+
 def getTaggedWords(filename):
     """
     Getting all the tagged information for the data file
