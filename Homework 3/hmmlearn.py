@@ -1,6 +1,7 @@
 import util
 import constant
 import datetime
+import pickle
 
 def getTagInfo(filename):
     """
@@ -355,7 +356,8 @@ if __name__ == '__main__':
 
             if word_count == total_emmission_count:
                 emission_prob = getEmissionProb(emission_count)
-                pass
+                with open('hmm_model.txt', 'w') as file:
+                    pickle.dump([starting_prob, transition_prob, emission_prob], file)
             else:
                 raise ValueError('Error in calculation of emmission probilities')
         else:
