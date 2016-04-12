@@ -171,6 +171,22 @@ def getTransitionCount(transition_count):
             count += previousObj['count']
     return count
 
+
+def getTagCount(transition_count):
+    """
+    Calculate the number of times a particular tag occurs
+    :param transition_count: the transition from 'a tag' to 'another tag'
+    :return: a dict representing the nubmer of times a 'tag' occurred in the data
+    """
+    tag_count = {}
+    for tag in transition_count:
+        count = 0
+        for nextTag in transition_count[tag]:
+            count += nextTag['count']
+        tag_count[tag] = count
+
+    return tag_count
+
 if __name__ == '__main__':
     start = datetime.datetime.now()
 
@@ -199,7 +215,9 @@ if __name__ == '__main__':
         expected_transition = word_count - len(tag_info)
 
         # If missed any transitions!
-        if expected_transition != transition_count:
+        if expected_transition == transition_count:
+            tag_count = getTagCount(POS_transition_count)
+        else:
             raise ValueError('Missing transition count!')
     else:
         raise ValueError('Missed')
