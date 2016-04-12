@@ -19,7 +19,7 @@ def tagData(starting_prob, transition_prob, emission_prob, file_contents):
     tagged_info = []
 
 
-
+    tagged_sentences = []
     for sentence in file_contents:
         tagged_sentence = []
 
@@ -84,10 +84,11 @@ def tagData(starting_prob, transition_prob, emission_prob, file_contents):
                     tagged_sentence.append(tagging)
             else:
                 print ''
-
+        tagged_sentences.append(tagged_sentence)
+    return tagged_sentences
 
 if __name__ == '__main__':
     starting_prob, transition_prob, emission_prob = getHMMModel('hmm_model.txt')
 
     file_contents = util.getUntaggedWords(constant.RAW_DATA)
-    tagData(starting_prob, transition_prob, emission_prob, file_contents)
+    tagged_sentences = tagData(starting_prob, transition_prob, emission_prob, file_contents)
