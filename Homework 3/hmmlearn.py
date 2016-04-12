@@ -265,8 +265,19 @@ def getEmissionCount(tag_info):
                     }
                     tags_count.append(tag_count)
 
-    return word_count
+    return word_tags
 
+def getTotalEmissionCount(emission_count):
+    """
+    Calculating the sum of all the emissions
+    :param emission_count: The emission of the tags
+    :return: the sum of all the emissions
+    """
+    count = 0
+    for word, tags in emission_count.iteritems():
+        for tag in tags:
+            count += tag['count']
+    return count
 
 if __name__ == '__main__':
     start = datetime.datetime.now()
@@ -301,6 +312,13 @@ if __name__ == '__main__':
             transition_prob = getTransitionProb(POS_transition_count, tag_count)
 
             emission_count = getEmissionCount(tag_info)
+
+            total_emmission_count = getTotalEmissionCount(emission_count)
+
+            if word_count == total_emmission_count:
+                pass
+            else:
+                raise ValueError('Error in calculation emmissions')
         else:
             raise ValueError('Missing transition count!')
     else:
