@@ -1,6 +1,7 @@
 import pickle
 import util
 import constant
+import datetime
 
 def getHMMModel(filename):
     """
@@ -116,12 +117,15 @@ def getDiff(tagged_sentences, true_value):
 
 
 if __name__ == '__main__':
+    start = datetime.datetime.now()
     starting_prob, transition_prob, emission_prob = getHMMModel('hmm_model.txt')
 
     file_contents = util.getUntaggedWords(constant.RAW_DATA)
     tagged_sentences = tagData(starting_prob, transition_prob, emission_prob, file_contents)
 
     true_value = util.getTaggedWords(constant.DEV_TAGGED_DATA)
-
+    end = datetime.datetime.now()
+    print 'Took ' + str(end-start) + ' time.'
     getDiff(tagged_sentences, true_value)
+
     pass
