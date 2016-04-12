@@ -147,7 +147,7 @@ def getPreviousTagIndex(previous, transition_array):
         index += 1
     return -1
 
-def getWordCount(tag_info):
+def getTotalWordCount(tag_info):
     """
     Count the words in the data file
     :param tag_info: the tag information
@@ -207,6 +207,28 @@ def getTransitionProb(transition_count, tagcount):
         transition_prob[tag] = next_tag_prob
     return transition_prob
 
+def getWordCount(tag_info):
+    """
+    Calculating the number of times a word occurs in the data file
+    :param tag_info: the tag information in the data file
+    :return: the dict representing the number of times a word occurs
+    """
+    word_count = {}
+    for sentence in tag_info:
+        for word in sentence:
+            if word['word'] in word_count:
+                word_count[word['word']] += 1
+            else:
+                word_count[word['word']] = 1
+
+    return word_count
+
+
+def getEmissionCount(tag_info):
+    word_count = getWordCount(tag_info)
+    pass
+
+
 if __name__ == '__main__':
     start = datetime.datetime.now()
 
@@ -226,7 +248,7 @@ if __name__ == '__main__':
         POS_transition_count = getPOSTransitionCount(tag_info)
 
         # Total number of words
-        word_count = getWordCount(tag_info)
+        word_count = getTotalWordCount(tag_info)
 
         # Total number of transitions
         transition_count = getTransitionCount(POS_transition_count)
@@ -238,6 +260,8 @@ if __name__ == '__main__':
         if expected_transition == transition_count:
             tag_count = getTagCount(POS_transition_count)
             transition_prob = getTransitionProb(POS_transition_count, tag_count)
+
+            emission_count = getEmissionCount(tag_info)
         else:
             raise ValueError('Missing transition count!')
     else:
