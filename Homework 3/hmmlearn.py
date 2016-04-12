@@ -2,6 +2,7 @@ import util
 import constant
 import datetime
 import pickle
+import sys
 
 def getTagInfo(filename):
     """
@@ -314,10 +315,15 @@ def getEmissionProb(emission_count):
 
 
 if __name__ == '__main__':
+
+    num_of_args = len(sys.argv)
+
+    if num_of_args == 2:
+        filename = sys.argv[1]
     start = datetime.datetime.now()
 
     # Tag Information
-    tag_info = getTagInfo(constant.TRAINING_TAGGED_DATA)
+    tag_info = getTagInfo(filename)
 
     # First Tag Count
     starting_tag_count = getStartingTagCount(tag_info)
