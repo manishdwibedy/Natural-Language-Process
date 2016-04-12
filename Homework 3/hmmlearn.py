@@ -308,11 +308,16 @@ if __name__ == '__main__':
 
         # If missed any transitions!
         if expected_transition == transition_count:
+            # Total number of tags in the data
             tag_count = getTagCount(POS_transition_count)
+
+            # Computing the transition probability
             transition_prob = getTransitionProb(POS_transition_count, tag_count)
 
+            # Emission count for every tag
             emission_count = getEmissionCount(tag_info)
 
+            # Total number of emissions
             total_emmission_count = getTotalEmissionCount(emission_count)
 
             if word_count == total_emmission_count:
