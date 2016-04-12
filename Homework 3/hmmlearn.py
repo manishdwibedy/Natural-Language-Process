@@ -292,9 +292,24 @@ def getEmissionTagCount(emission_tag):
     return count
 
 def getEmissionProb(emission_count):
-    for word, tag_emission in emission_count.iteritems():
-        total = getEmissionTagCount(tag_emission)
-    pass
+    """
+    Calculating the emission probabilities for each of the word
+    :param emission_count: the emission list for the word
+    :return: the emission probability of each word
+    """
+    emission_prob = {}
+    for word, word_emissions in emission_count.iteritems():
+        emission_list = []
+        total = float(getEmissionTagCount(word_emissions))
+        for word_emission in word_emissions:
+            prob = {
+                'tag': word_emission['tag'],
+                'prob':word_emission['count'] / total
+            }
+            emission_list.append(prob)
+        emission_prob[word] = emission_list
+
+    return emission_prob
 
 
 if __name__ == '__main__':
@@ -339,7 +354,7 @@ if __name__ == '__main__':
             total_emmission_count = getTotalEmissionCount(emission_count)
 
             if word_count == total_emmission_count:
-                getEmissionProb(emission_count)
+                emission_prob = getEmissionProb(emission_count)
                 pass
             else:
                 raise ValueError('Error in calculation of emmission probilities')
