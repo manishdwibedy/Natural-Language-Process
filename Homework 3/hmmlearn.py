@@ -181,8 +181,8 @@ def getTagCount(transition_count):
     tag_count = {}
     for tag in transition_count:
         count = 0
-        for nextTag in transition_count[tag]:
-            count += nextTag['count']
+        for previousTag in transition_count[tag]:
+            count += previousTag['count']
         tag_count[tag] = count
 
     return tag_count
@@ -206,6 +206,7 @@ def getTransitionProb(transition_count, tagcount):
             next_tag_prob.append(tag_prob)
         transition_prob[tag] = next_tag_prob
     return transition_prob
+
 if __name__ == '__main__':
     start = datetime.datetime.now()
 
