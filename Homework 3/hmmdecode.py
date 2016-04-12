@@ -115,7 +115,24 @@ def getDiff(tagged_sentences, true_value):
         sentenceIndex += 1
     pass
 
+def writeOutput(tagged_sentences):
 
+    sentences = []
+
+    # Preparing the data to be written in the file
+    for sentence in tagged_sentences:
+        sentence_file = ''
+        for tagged_word in sentence:
+            sentence_file += tagged_word['word'] + '/' + tagged_word['tag'] + ' '
+        sentence_file = sentence_file.strip()
+        sentence_file += '\n'
+        sentences.append(sentence_file)
+
+    output = open('hmmoutput.txt', 'w')
+    for sentence in sentences:
+        output.write(sentence)
+    output.close()
+    pass
 if __name__ == '__main__':
     start = datetime.datetime.now()
     starting_prob, transition_prob, emission_prob = getHMMModel('hmm_model.txt')
@@ -124,8 +141,10 @@ if __name__ == '__main__':
     tagged_sentences = tagData(starting_prob, transition_prob, emission_prob, file_contents)
 
     true_value = util.getTaggedWords(constant.DEV_TAGGED_DATA)
+
+    writeOutput(tagged_sentences)
+    getDiff(tagged_sentences, true_value)
     end = datetime.datetime.now()
     print 'Took ' + str(end-start) + ' time.'
-    getDiff(tagged_sentences, true_value)
 
     pass
