@@ -225,8 +225,47 @@ def getWordCount(tag_info):
 
 
 def getEmissionCount(tag_info):
+    """
+    Computing the emission probability
+    :param tag_info: the tag information in the data file
+    :return: currently nothing
+    """
     word_count = getWordCount(tag_info)
-    pass
+
+
+    # {word : [{tag1: count1}, {tag2: count2}]...}
+    word_tags = {}
+
+    for sentence in tag_info:
+        for wordtag in sentence:
+            word = wordtag['word']
+            tag = wordtag['tag']
+
+            # If the word has not been seen ever
+            if word not in word_tags:
+                tag_count = {
+                    'tag': tag,
+                    'count': 1
+                }
+                word_tags[word] = [tag_count]
+            # else, already seen the word
+            else:
+                tags_count = word_tags[word]
+
+                # If I have also seen the tag already for the word in consideration
+                for tag_count in tags_count:
+                    if tag_count['tag'] == tag:
+                        tag_count['count'] += 1
+                        break
+                # If I could not find the tag for the word
+                else:
+                    tag_count = {
+                        'tag': tag,
+                        'count': 1
+                    }
+                    tags_count.append(tag_count)
+
+    return word_count
 
 
 if __name__ == '__main__':
