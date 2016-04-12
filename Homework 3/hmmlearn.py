@@ -187,6 +187,25 @@ def getTagCount(transition_count):
 
     return tag_count
 
+def getTransitionProb(transition_count, tagcount):
+    """
+    Get the transition probability from a tag to another tag
+    :param transition_count: the transition counts from 'a tag' to 'another tag'
+    :param tagcount: the total number of times tag occur
+    :return: a dict representing the prob that 'a tag' goes to 'another tag'
+    """
+    transition_prob = {}
+    for tag in transition_count:
+        next_tag_prob = []
+        for previousTag in transition_count[tag]:
+            probability = previousTag['count'] / float(tagcount[tag])
+            tag_prob = {
+                'previous': previousTag['previous'],
+                'prob': probability
+            }
+            next_tag_prob.append(tag_prob)
+        transition_prob[tag] = next_tag_prob
+    return transition_prob
 if __name__ == '__main__':
     start = datetime.datetime.now()
 
@@ -217,6 +236,7 @@ if __name__ == '__main__':
         # If missed any transitions!
         if expected_transition == transition_count:
             tag_count = getTagCount(POS_transition_count)
+            transition_prob = getTransitionProb(POS_transition_count, tag_count)
         else:
             raise ValueError('Missing transition count!')
     else:
