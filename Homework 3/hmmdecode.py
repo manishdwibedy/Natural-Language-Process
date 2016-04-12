@@ -92,3 +92,6 @@ if __name__ == '__main__':
 
     file_contents = util.getUntaggedWords(constant.RAW_DATA)
     tagged_sentences = tagData(starting_prob, transition_prob, emission_prob, file_contents)
+
+    true_value = util.getTaggedWords(constant.DEV_TAGGED_DATA)
+    pass
