@@ -279,6 +279,24 @@ def getTotalEmissionCount(emission_count):
             count += tag['count']
     return count
 
+
+def getEmissionTagCount(emission_tag):
+    """
+    Getting the number of tags the word has
+    :param emission_tag: the emission list for the word
+    :return: the total number of tag
+    """
+    count = 0
+    for tag in emission_tag:
+        count += tag['count']
+    return count
+
+def getEmissionProb(emission_count):
+    for word, tag_emission in emission_count.iteritems():
+        total = getEmissionTagCount(tag_emission)
+    pass
+
+
 if __name__ == '__main__':
     start = datetime.datetime.now()
 
@@ -321,6 +339,7 @@ if __name__ == '__main__':
             total_emmission_count = getTotalEmissionCount(emission_count)
 
             if word_count == total_emmission_count:
+                getEmissionProb(emission_count)
                 pass
             else:
                 raise ValueError('Error in calculation of emmission probilities')
