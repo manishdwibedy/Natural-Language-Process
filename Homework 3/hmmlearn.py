@@ -70,7 +70,7 @@ def getStartProb(start_prob, totalCount):
         starting_prob[tag] = count/totalCount
     return starting_prob
 
-def getTransitionCount(tag_info):
+def getPOSTransitionCount(tag_info):
     """
     Compute the transition probability
     :param tag_info: the tag information
@@ -159,7 +159,7 @@ def getWordCount(tag_info):
         pass
     return count
 
-def getTransitionCountList(transition_count):
+def getTransitionCount(transition_count):
     """
     Counting the number of transtion in the transition_count
     :param transition_count: the transition dictionary
@@ -187,13 +187,13 @@ if __name__ == '__main__':
         starting_prob = getStartProb(starting_tag_count, len(tag_info))
 
         # Transition Count
-        transition_count = getTransitionCount(tag_info)
+        POS_transition_count = getPOSTransitionCount(tag_info)
 
         # Total number of words
         word_count = getWordCount(tag_info)
 
         # Total number of transitions
-        transition_count = getTransitionCountList(transition_count)
+        transition_count = getTransitionCount(POS_transition_count)
 
         # Expected number of transitions
         expected_transition = word_count - len(tag_info)
