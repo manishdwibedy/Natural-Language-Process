@@ -83,7 +83,14 @@ def tagData(starting_prob, transition_prob, emission_prob, file_contents):
                     currentTag = bestTag
                     tagged_sentence.append(tagging)
             else:
-                print ''
+                # By default, assuming that the unknown word is NC
+                tagging = {
+                    'word': word,
+                    'tag': 'NC'
+                }
+                # Change the tag to NC
+                currentTag = 'NC'
+                tagged_sentence.append(tagging)
         tagged_sentences.append(tagged_sentence)
     return tagged_sentences
 
