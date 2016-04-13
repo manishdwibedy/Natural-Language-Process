@@ -4,13 +4,14 @@ import datetime
 import pickle
 import sys
 
-def getTagInfo(filename):
+def getTagInfo(filename, isAbsolutePath = False):
     """
     Getting the tag information from the data file
     :param filename: The name of the data file
+    :param isAbsolutePath: is the filename, the absolute path to the file
     :return: the list of object, where each object would be dict representing tag and word
     """
-    return util.getTaggedWords(filename)
+    return util.getTaggedWords(filename, isAbsolutePath)
 
 def getStartingTagCount(tag_info):
     """
@@ -323,7 +324,8 @@ if __name__ == '__main__':
     start = datetime.datetime.now()
 
     # Tag Information
-    tag_info = getTagInfo(filename)
+    # Use the command-line input as absolute path to the file
+    tag_info = getTagInfo(filename, True)
 
     # First Tag Count
     starting_tag_count = getStartingTagCount(tag_info)

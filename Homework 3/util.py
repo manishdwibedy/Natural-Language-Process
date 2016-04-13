@@ -23,18 +23,24 @@ def getDataDirectory():
     """
     return os.path.join(getCurrentPath(), constant.DATA_DIR)
 
-def readData(filename):
+def readData(filename, isAbsolutePath = False):
     """
     Readging the data file, specified by the filename
     :param filename: The filename to be read
+    :param isAbsolutePath: is the filename, the absolute path to the file
     :return: A list containing every line in the file
     """
 
     # File Content list
     fileContents = []
 
-    # Generating the file's absolute path
-    path = os.path.join(getDataDirectory(), filename)
+    # If the path is not absolute, get the absolute path
+    if not isAbsolutePath:
+        # Generating the file's absolute path
+        path = os.path.join(getDataDirectory(), filename)
+    # Else, use the input as it is
+    else:
+        path = filename
 
     with open(path) as file:
         for line in file:
@@ -54,16 +60,17 @@ def getUntaggedWords(filename):
 
     return untagged_words_list
 
-def getTaggedWords(filename):
+def getTaggedWords(filename, isAbsolutePath = False):
     """
     Getting all the tagged information for the data file
     :param filename: Name of the data file
+    :param isAbsolutePath: is the filename, the absolute path to the file
     :return: the tag information
     """
     tag_info_list = []
 
     # Getting all the content of the file
-    fileContents = readData(filename)
+    fileContents = readData(filename, isAbsolutePath)
 
     # For every sentence in the file
     for sentance in fileContents:
