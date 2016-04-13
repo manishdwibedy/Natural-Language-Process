@@ -128,6 +128,8 @@ def getDiff(tagged_sentences, true_value):
                 wrongTag += 1
             wordIndex += 1
         sentenceIndex += 1
+    accuracy = float(correctTag) / (correctTag + wrongTag)
+    print 'Accuracy : ' + str(accuracy * 100)
     pass
 
 def writeOutput(tagged_sentences):
