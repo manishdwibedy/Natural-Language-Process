@@ -3,6 +3,7 @@ import util
 import constant
 import datetime
 import sys
+import re
 
 def getHMMModel(filename):
     """
@@ -30,10 +31,15 @@ def getMostProbableTag(transition_prob):
 def tagData(starting_prob, transition_prob, emission_prob, file_contents):
 
     currentTag = ''
+    currentWord = ''
     # previousTag = ''
     tagged_info = []
 
     most_probable_tag = getMostProbableTag(transition_prob)
+
+    # unseen words
+    unseen_words_count = 0
+    unseen_words = []
 
     tagged_sentences = []
     for sentence in file_contents:
@@ -97,17 +103,58 @@ def tagData(starting_prob, transition_prob, emission_prob, file_contents):
                     }
                     # Change the tag and
                     currentTag = bestTag
+                    currentWord = word
                     tagged_sentence.append(tagging)
             else:
                 # By default, assuming that the unknown word is NC
-                tagging = {
-                    'word': word,
-                    'tag': most_probable_tag[currentTag]
-                }
-                # Change the tag to NC
-                tagged_sentence.append(tagging)
-                currentTag = most_probable_tag[currentTag]
+                # max_Tag = ''
+                # max_Prob = 0
+                # for tag in emission_prob[currentWord]:
+                #
+                #     for nextTag in transition_prob[tag['tag']]:
+                #         prob = tag['prob'] * nextTag['prob']
+                #         if prob > max_Prob:
+                #             max_Prob = prob
+                #             max_Tag = nextTag['previous']
+
+                matchObj = re.match( r'.*[A-Z].*', word)
+                if matchObj:
+                    tagging = {
+                        'word': word,
+                        'tag': 'NP'
+                    }
+                    # Change the tag to NC
+                    tagged_sentence.append(tagging)
+                    currentTag = 'NP'
+                elif re.match( r'.*[0-9].*', word):
+                    tagging = {
+                        'word': word,
+                        'tag': 'ZZ'
+                    }
+                    # Change the tag to NC
+                    tagged_sentence.append(tagging)
+                    currentTag = 'ZZ'
+                elif re.match( r'.*[,.()%].*', word):
+                    tagging = {
+                        'word': word,
+                        'tag': 'FF'
+                    }
+                    # Change the tag to NC
+                    tagged_sentence.append(tagging)
+                    currentTag = 'FF'
+                else:
+                    tagging = {
+                        'word': word,
+                        'tag': 'NC'
+                    }
+                    # Change the tag to NC
+                    tagged_sentence.append(tagging)
+                    currentTag = 'NC'
+                most_probable_tag[currentTag]
+                unseen_words_count += 1
+                unseen_words.append(word)
         tagged_sentences.append(tagged_sentence)
+
     return tagged_sentences
 
 def getDiff(tagged_sentences, true_value):
