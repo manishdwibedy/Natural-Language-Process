@@ -14,12 +14,26 @@ def getHMMModel(filename):
         starting_prob, transition_prob, emission_prob = pickle.load(file)
     return starting_prob, transition_prob, emission_prob
 
+def getMostProbableTag(transition_prob):
+    most_likely_tag = {}
+    for tag, tag_prob in transition_prob.iteritems():
+        max_prob = 0
+        max_tag = ''
+        for nextTag in tag_prob:
+            if nextTag['prob'] > max_prob:
+                max_prob = nextTag['prob']
+                max_tag = nextTag['previous']
+        most_likely_tag[tag] = max_tag
+    return most_likely_tag
+
+
 def tagData(starting_prob, transition_prob, emission_prob, file_contents):
 
     currentTag = ''
     # previousTag = ''
     tagged_info = []
 
+    most_probable_tag = getMostProbableTag(transition_prob)
 
     tagged_sentences = []
     for sentence in file_contents:
@@ -88,11 +102,11 @@ def tagData(starting_prob, transition_prob, emission_prob, file_contents):
                 # By default, assuming that the unknown word is NC
                 tagging = {
                     'word': word,
-                    'tag': 'NC'
+                    'tag': most_probable_tag[currentTag]
                 }
                 # Change the tag to NC
-                currentTag = 'NC'
                 tagged_sentence.append(tagging)
+                currentTag = most_probable_tag[currentTag]
         tagged_sentences.append(tagged_sentence)
     return tagged_sentences
 
