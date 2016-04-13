@@ -147,10 +147,13 @@ if __name__ == '__main__':
     file_contents = util.getUntaggedWords(filename, True)
     tagged_sentences = tagData(starting_prob, transition_prob, emission_prob, file_contents)
 
-    true_value = util.getTaggedWords(constant.DEV_TAGGED_DATA)
+    # If True, would compute the accurary of the tagger
+    if constant.COMPUTE_ACCURACY:
+        true_value = util.getTaggedWords(constant.DEV_TAGGED_DATA)
+        getDiff(tagged_sentences, true_value)
 
     writeOutput(tagged_sentences)
-    getDiff(tagged_sentences, true_value)
+
     end = datetime.datetime.now()
     print 'Took ' + str(end-start) + ' time.'
 
