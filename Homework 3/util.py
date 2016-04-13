@@ -48,10 +48,10 @@ def readData(filename, isAbsolutePath = False):
 
     return fileContents
 
-def getUntaggedWords(filename):
+def getUntaggedWords(filename, isAbsolutePath = False):
     untagged_words_list = []
     # Getting all the content of the file
-    fileContents = readData(filename)
+    fileContents = readData(filename, isAbsolutePath)
 
     # For every sentence in the file
     for sentance in fileContents:

@@ -144,7 +144,7 @@ if __name__ == '__main__':
 
     starting_prob, transition_prob, emission_prob = getHMMModel('hmm_model.txt')
 
-    file_contents = util.getUntaggedWords(filename)
+    file_contents = util.getUntaggedWords(filename, True)
     tagged_sentences = tagData(starting_prob, transition_prob, emission_prob, file_contents)
 
     true_value = util.getTaggedWords(constant.DEV_TAGGED_DATA)
