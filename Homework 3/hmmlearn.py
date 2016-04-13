@@ -201,7 +201,7 @@ def getTransitionProb(transition_count, tagcount):
     for tag in transition_count:
         next_tag_prob = []
         for previousTag in transition_count[tag]:
-            probability = previousTag['count'] / float(tagcount[tag])
+            probability = (previousTag['count'] + 1)/ float(tagcount[tag] + len(tagcount))
             tag_prob = {
                 'previous': previousTag['previous'],
                 'prob': probability
