@@ -33,7 +33,7 @@ class NGrams(object):
             # If the words are less than 4, only one N-gram is possible
             if len(words) < self.n:
                 # The only n-gram
-                ngram = ' '.join(words).strip()
+                ngram = ' '.join(words).strip().lower()
 
                 if ngram in line_ngrams:
                     line_ngrams[ngram] += 1
@@ -43,9 +43,9 @@ class NGrams(object):
             # Otherwise len(words) - 3 number of 4-grams are possible
             else:
                 end_index = len(words) - self.n
-                for index in range(0, end_index):
+                for index in range(0, end_index + 1):
                     n_words = words[index:index+self.n]
-                    ngram = ' '.join(n_words).strip()
+                    ngram = ' '.join(n_words).strip().lower()
                     if ngram in line_ngrams:
                         line_ngrams[ngram] += 1
                     else:
