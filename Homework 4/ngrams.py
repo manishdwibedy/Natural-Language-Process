@@ -12,16 +12,35 @@ class NGrams(object):
         lines = []
 
         with codecs.open(self.filename,'r',encoding='utf8') as f:
-            self.lines = f.readlines()
+            lines = f.readlines()
+
+        self.lines = lines
 
     def computeNGramsFile(self):
         # Reading the file
         self.readFile()
 
+        self.ngrams = []
+
         # For each of the lines
         for line in self.lines:
             # computing the list of words
-            print line
+            words = line.split(' ')
+
+            # If the words are less than 4, only one N-gram is possible
+            if len(words) < 4:
+                # The only n-gram
+                ngram = ' '.join(words).strip()
+                self.ngrams.append(ngram)
+            # Otherwise len(words) - 3 number of 4-grams are possible
+            else:
+                end_index = len(words) - 4
+                for index in range(0, end_index):
+                    n_words = words[index:index+4]
+                    ngram = ' '.join(n_words).strip()
+                    self.ngrams.append(ngram)
+        print 'Done with the N-graming'
+        pass
 
 if __name__ == '__main__':
     file_location = 'data/candidate-1.txt'
