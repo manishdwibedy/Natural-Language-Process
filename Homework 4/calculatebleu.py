@@ -43,47 +43,60 @@ class ComputeBLEU(object):
 
         Computation of the BLEU score
         '''
-
+        candidate_word_count = 0
+        reference_word_count = 0
         result = []
         for n in self.nRange:
             self.computeNgrams(n)
 
+            if n == 1:
+                reference_word_count = self.getWordCountFile(self.reference_ngrams)
+                candidate_word_count = self.getWordCountFile(self.candidate_ngrams)
+
             ngram_BLEU_Score = 0
-            for lineNumber, line in enumerate(self.candidate_ngrams):
+            for candidate_line_index, candidate_line in enumerate(self.candidate_ngrams):
                 line_BLEU_score = 0
-                for candidate_ngram, candidate_count in line.iteritems():
-                    reference_line = self.reference_ngrams[lineNumber]
+                reference_line = self.reference_ngrams[candidate_line_index]
+
+                for candidate_ngram, candidate_count in candidate_line.iteritems():
                     # the ngram is present in the reference line, as well
                     if candidate_ngram in reference_line:
-                        count = min(candidate_count, self.reference_ngrams[lineNumber][candidate_ngram])
+                        count = min(candidate_count, self.reference_ngrams[candidate_line_index][candidate_ngram])
                         line_BLEU_score += float(count)
                 ngram_BLEU_Score += line_BLEU_score
-            part_result = ngram_BLEU_Score / self.getWords(self.candidate_ngrams)
+            part_result = ngram_BLEU_Score / self.getWordCountFile(self.candidate_ngrams)
             result.append({
                 'result': part_result,
-                'candidateLength': self.getWords(self.candidate_ngrams),
-                'referenceLength': self.getWords(self.reference_ngrams),
             })
             # result.append(part_result)
 
+        if candidate_word_count <= reference_word_count:
+            ratio = reference_word_count / candidate_word_count
+            BP = math.exp( 1 - ratio )
+        else:
+            BP = 1
+
         BLEU_Score = 0
         for result_item in result:
-            reference_length = result_item['referenceLength']
-            candidate_length = result_item['candidateLength']
-            if candidate_length <= reference_length:
-                ratio = reference_length / candidate_length
-                BP = math.exp( 1 - ratio )
-            else:
-                BP = 1
-            BLEU_Score += BP * math.log(result_item['result']+1)
+            p_n = math.log(result_item['result'])
+            w_n = (1.00/len(result))
+            BLEU_Score += p_n * w_n
 
-        BLEU_Score /= len(result)
+        BLEU_Score = math.exp(BLEU_Score)
+        BLEU_Score *= BP
         print BLEU_Score
 
-    def getWords(self, ngram):
+    def getWordCountLine(self, ngram):
         word_count = 0
-        for ngam_line in ngram:
-            for ngram_token, count in ngam_line.iteritems():
+        # for ngam_line in ngram:
+        for ngram_token, count in ngram.iteritems():
+            word_count += count
+        return word_count
+
+    def getWordCountFile(self, ngram):
+        word_count = 0
+        for ngram_line in ngram:
+            for ngram_token, count in ngram_line.iteritems():
                 word_count += count
         return word_count
 if __name__ == '__main__':
