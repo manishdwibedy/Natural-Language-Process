@@ -8,6 +8,7 @@ class ComputeBLEU(object):
     two arguments /path/to/candidate /path/to/reference to read the candidate and reference files
     '''
     def __init__(self):
+        self.nRange = range(1,5)
         if len(sys.argv) < 3:
             sys.exit('Usage: %s /path/to/candidate /path/to/reference' % sys.argv[0])
         self.candidata_file = sys.argv[1]
@@ -44,10 +45,10 @@ class ComputeBLEU(object):
         '''
 
         result = []
-        for n in range(1,5):
+        for n in self.nRange:
             self.computeNgrams(n)
 
-            BLEU_Score = 0
+            ngram_BLEU_Score = 0
             for lineNumber, line in enumerate(self.candidate_ngrams):
                 line_BLEU_score = 0
                 for candidate_ngram, candidate_count in line.iteritems():
@@ -56,8 +57,8 @@ class ComputeBLEU(object):
                     if candidate_ngram in reference_line:
                         count = min(candidate_count, self.reference_ngrams[lineNumber][candidate_ngram])
                         line_BLEU_score += float(count)
-                BLEU_Score += line_BLEU_score
-            part_result = BLEU_Score / self.getWords(self.candidate_ngrams)
+                ngram_BLEU_Score += line_BLEU_score
+            part_result = ngram_BLEU_Score / self.getWords(self.candidate_ngrams)
             result.append(part_result)
 
         BLEU_Score = 0
