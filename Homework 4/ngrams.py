@@ -46,7 +46,15 @@ class NGrams(object):
                         self.ngrams[ngram] += 1
                     else:
                         self.ngrams[ngram] = 1
-        print 'Done with the N-graming'
+
+    def getNGrams(self):
+        '''
+        Returing the n-grams as a dict
+        :return: a dict of n-grams with their counts
+        '''
+        self.computeNGramsFile()
+
+        return self.ngrams
 
 if __name__ == '__main__':
     file_location = 'data/candidate-1.txt'
