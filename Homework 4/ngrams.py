@@ -27,6 +27,8 @@ class NGrams(object):
         for line in self.lines:
             line_ngrams = {}
 
+            if line[-1] == '.':
+                line = line[:-1]
             # computing the list of words
             words = line.strip().split(' ')
 
