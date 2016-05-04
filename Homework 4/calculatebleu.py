@@ -58,8 +58,7 @@ class ComputeBLEU(object):
             print line_BLEU_score
             # print line_BLEU_score
             BLEU_Score += line_BLEU_score
-        pass
-        # print BLEU_score / len(self.candidate_ngrams)
+        print BLEU_Score / len(self.candidate_ngrams)
 
     def getWords(self, ngram):
         word_count = 0
