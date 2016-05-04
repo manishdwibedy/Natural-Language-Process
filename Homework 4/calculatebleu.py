@@ -13,6 +13,8 @@ class ComputeBLEU(object):
             sys.exit('Usage: %s /path/to/candidate /path/to/reference' % sys.argv[0])
         self.candidata_file = sys.argv[1]
         self.reference_file = sys.argv[2]
+        self.multipleReferences = False
+
 
     def getCandidateNGrams(self, n):
         '''
