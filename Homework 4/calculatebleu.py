@@ -68,7 +68,6 @@ class ComputeBLEU(object):
             result.append({
                 'result': part_result,
             })
-            # result.append(part_result)
 
         if candidate_word_count <= reference_word_count:
             ratio = reference_word_count / candidate_word_count
