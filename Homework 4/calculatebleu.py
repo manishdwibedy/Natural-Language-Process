@@ -86,10 +86,10 @@ class ComputeBLEU(object):
     def computeBP(self, candidate_word_count, reference_word_count):
         if candidate_word_count <= reference_word_count:
             ratio = reference_word_count / candidate_word_count
-            BP = math.exp( 1 - ratio )
+            bp = math.exp( 1 - ratio )
         else:
-            BP = 1
-        return BP
+            bp = 1
+        return bp
 
     def getWordCountLine(self, ngram):
         word_count = 0
