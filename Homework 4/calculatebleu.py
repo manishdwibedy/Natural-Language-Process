@@ -1,6 +1,7 @@
 import sys
 import ngrams
 import math
+import os
 
 class ComputeBLEU(object):
     '''
@@ -13,7 +14,12 @@ class ComputeBLEU(object):
             sys.exit('Usage: %s /path/to/candidate /path/to/reference' % sys.argv[0])
         self.candidata_file = sys.argv[1]
         self.reference_file = sys.argv[2]
-        self.multipleReferences = False
+
+        if os.path.isdir(sys.argv[2]):
+            self.multipleReferences = True
+        else:
+            self.multipleReferences = False
+
 
 
     def getCandidateNGrams(self, n):
