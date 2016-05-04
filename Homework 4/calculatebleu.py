@@ -38,14 +38,12 @@ class ComputeBLEU(object):
         self.getCandidateNGrams(n)
         self.getReferenceNGrams(n)
 
-    def computeBLUE(self):
-        '''
-
-        Computation of the BLEU score
-        '''
+    def compute_blue_ngrams(self):
         candidate_word_count = 0
         reference_word_count = 0
+
         result = []
+
         for n in self.nRange:
             self.computeNgrams(n)
 
@@ -66,6 +64,14 @@ class ComputeBLEU(object):
                 ngram_BLEU_Score += line_BLEU_score
             part_result = ngram_BLEU_Score / self.getWordCountFile(self.candidate_ngrams)
             result.append(part_result)
+        return candidate_word_count, reference_word_count, result
+    def computeBLUE(self):
+        '''
+
+        Computation of the BLEU score
+        '''
+
+        candidate_word_count, reference_word_count, result = self.compute_blue_ngrams()
 
         if candidate_word_count <= reference_word_count:
             ratio = reference_word_count / candidate_word_count
