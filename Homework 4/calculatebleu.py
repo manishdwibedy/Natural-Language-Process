@@ -82,15 +82,9 @@ class ComputeBLEU(object):
 
     def getWords(self, ngram):
         word_count = 0
-        symbols = '!$%^&*()_+|~-=`{}[]:";<>?,./'
-
-        symbol_list = []
-        for symbol in symbols:
-            symbol_list.append(symbol)
         for ngam_line in ngram:
             for ngram_token, count in ngam_line.iteritems():
-                if ngram_token not in symbol_list:
-                    word_count += count
+                word_count += count
         return word_count
 if __name__ == '__main__':
     blue = ComputeBLEU()
