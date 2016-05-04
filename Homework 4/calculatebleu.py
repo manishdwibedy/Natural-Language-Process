@@ -66,7 +66,7 @@ class ComputeBLEU(object):
             word_count += count
         return word_count
 if __name__ == '__main__':
-    n = 1
+    n = 2
     blue = ComputeBLEU(n)
     blue.computeBLUE()
     pass
