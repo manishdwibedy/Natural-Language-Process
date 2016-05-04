@@ -27,7 +27,7 @@ class NGrams(object):
             line_ngrams = {}
 
             # computing the list of words
-            words = line.split(' ')
+            words = line.strip().split(' ')
 
             # If the words are less than 4, only one N-gram is possible
             if len(words) < 4:
@@ -61,6 +61,6 @@ class NGrams(object):
         return self.ngrams
 
 if __name__ == '__main__':
-    file_location = 'data/candidate-1.txt'
+    file_location = 'data/reference-1.txt'
     ngrams =  NGrams(file_location).getNGrams()
     print ngrams
