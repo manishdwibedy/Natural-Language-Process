@@ -1,8 +1,9 @@
 import codecs
 
 class NGrams(object):
-    def __init__(self, filename):
+    def __init__(self, n, filename):
         self.filename = filename
+        self.n = n
 
     def readFile(self):
         '''
@@ -30,7 +31,7 @@ class NGrams(object):
             words = line.strip().split(' ')
 
             # If the words are less than 4, only one N-gram is possible
-            if len(words) < 4:
+            if len(words) < self.n:
                 # The only n-gram
                 ngram = ' '.join(words).strip()
 
@@ -41,9 +42,9 @@ class NGrams(object):
 
             # Otherwise len(words) - 3 number of 4-grams are possible
             else:
-                end_index = len(words) - 4
+                end_index = len(words) - self.n
                 for index in range(0, end_index):
-                    n_words = words[index:index+4]
+                    n_words = words[index:index+self.n]
                     ngram = ' '.join(n_words).strip()
                     if ngram in line_ngrams:
                         line_ngrams[ngram] += 1
@@ -61,6 +62,6 @@ class NGrams(object):
         return self.ngrams
 
 if __name__ == '__main__':
-    file_location = 'data/reference-1.txt'
-    ngrams =  NGrams(file_location).getNGrams()
+    file_location = 'data/book_data/reference-1.txt'
+    ngrams =  NGrams(1, file_location).getNGrams()
     print ngrams
