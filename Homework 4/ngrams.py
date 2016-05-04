@@ -39,18 +39,17 @@ class NGrams(object):
                 else:
                     line_ngrams[ngram] = 1
 
-                self.ngrams.append(line_ngrams)
-
             # Otherwise len(words) - 3 number of 4-grams are possible
             else:
                 end_index = len(words) - 4
                 for index in range(0, end_index):
                     n_words = words[index:index+4]
                     ngram = ' '.join(n_words).strip()
-                    if ngram in self.ngrams:
-                        self.ngrams[ngram] += 1
+                    if ngram in line_ngrams:
+                        line_ngrams[ngram] += 1
                     else:
-                        self.ngrams[ngram] = 1
+                        line_ngrams[ngram] = 1
+            self.ngrams.append(line_ngrams)
 
     def getNGrams(self):
         '''
@@ -63,4 +62,5 @@ class NGrams(object):
 
 if __name__ == '__main__':
     file_location = 'data/candidate-1.txt'
-    print NGrams(file_location).getNGrams()
+    ngrams =  NGrams(file_location).getNGrams()
+    print ngrams
