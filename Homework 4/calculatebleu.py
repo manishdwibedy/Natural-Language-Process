@@ -59,11 +59,23 @@ class ComputeBLEU(object):
                         line_BLEU_score += float(count)
                 ngram_BLEU_Score += line_BLEU_score
             part_result = ngram_BLEU_Score / self.getWords(self.candidate_ngrams)
-            result.append(part_result)
+            result.append({
+                'result': part_result,
+                'candidateLength': self.getWords(self.candidate_ngrams),
+                'referenceLength': self.getWords(self.reference_ngrams),
+            })
+            # result.append(part_result)
 
         BLEU_Score = 0
-        for r in result:
-            BLEU_Score += math.log(r+1)
+        for result_item in result:
+            reference_length = result_item['referenceLength']
+            candidate_length = result_item['candidateLength']
+            if candidate_length <= reference_length:
+                ratio = reference_length / candidate_length
+                BP = math.exp( 1 - ratio )
+            else:
+                BP = 1
+            BLEU_Score += BP * math.log(result_item['result']+1)
 
         BLEU_Score /= len(result)
         print BLEU_Score
