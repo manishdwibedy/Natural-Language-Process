@@ -36,8 +36,23 @@ class ComputeBLEU(object):
         self.getCandidateNGrams()
         self.getReferenceNGrams()
 
+    def computeBLUE(self):
+        '''
+
+        Computation of the BLEU score
+        '''
+        self.computeNgrams()
+
+        BLEU_score = 0
+        for candidate_ngram, candidate_count in self.candidate_ngrams.iteritems():
+
+            # the ngam is present in the reference file, as well
+            if candidate_ngram in self.reference_ngrams:
+                count = min(candidate_count, self.reference_ngrams[candidate_ngram])
+                BLEU_score += float(count) / len(candidate_ngram)
+        print BLEU_score
 
 if __name__ == '__main__':
     blue = ComputeBLEU()
-    blue.computeNgrams()
+    blue.computeBLUE()
     pass
