@@ -73,12 +73,6 @@ class ComputeBLEU(object):
 
         candidate_word_count, reference_word_count, result = self.compute_blue_ngrams()
 
-        if candidate_word_count <= reference_word_count:
-            ratio = reference_word_count / candidate_word_count
-            BP = math.exp( 1 - ratio )
-        else:
-            BP = 1
-
         BLEU_Score = 0
         for result_item in result:
             p_n = math.log(result_item)
@@ -86,8 +80,16 @@ class ComputeBLEU(object):
             BLEU_Score += (p_n * w_n)
 
         BLEU_Score = math.exp(BLEU_Score)
-        BLEU_Score *= BP
+        BLEU_Score *= self.computeBP(candidate_word_count, reference_word_count)
         print BLEU_Score
+
+    def computeBP(self, candidate_word_count, reference_word_count):
+        if candidate_word_count <= reference_word_count:
+            ratio = reference_word_count / candidate_word_count
+            BP = math.exp( 1 - ratio )
+        else:
+            BP = 1
+        return BP
 
     def getWordCountLine(self, ngram):
         word_count = 0
