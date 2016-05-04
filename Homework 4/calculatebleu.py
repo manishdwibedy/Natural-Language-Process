@@ -65,9 +65,7 @@ class ComputeBLEU(object):
                         line_BLEU_score += float(count)
                 ngram_BLEU_Score += line_BLEU_score
             part_result = ngram_BLEU_Score / self.getWordCountFile(self.candidate_ngrams)
-            result.append({
-                'result': part_result,
-            })
+            result.append(part_result)
 
         if candidate_word_count <= reference_word_count:
             ratio = reference_word_count / candidate_word_count
@@ -77,9 +75,9 @@ class ComputeBLEU(object):
 
         BLEU_Score = 0
         for result_item in result:
-            p_n = math.log(result_item['result'])
+            p_n = math.log(result_item)
             w_n = (1.00/len(result))
-            BLEU_Score += p_n * w_n
+            BLEU_Score += (p_n * w_n)
 
         BLEU_Score = math.exp(BLEU_Score)
         BLEU_Score *= BP
