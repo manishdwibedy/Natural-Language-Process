@@ -58,4 +58,4 @@ class NGrams(object):
 
 if __name__ == '__main__':
     file_location = 'data/candidate-1.txt'
-    NGrams(file_location).computeNGramsFile()
+    print NGrams(file_location).getNGrams()
