@@ -20,10 +20,12 @@ class NGrams(object):
         # Reading the file
         self.readFile()
 
-        self.ngrams = {}
+        self.ngrams = []
 
         # For each of the lines
         for line in self.lines:
+            line_ngrams = {}
+
             # computing the list of words
             words = line.split(' ')
 
@@ -32,10 +34,13 @@ class NGrams(object):
                 # The only n-gram
                 ngram = ' '.join(words).strip()
 
-                if ngram in self.ngrams:
-                    self.ngrams[ngram] += 1
+                if ngram in line_ngrams:
+                    line_ngrams[ngram] += 1
                 else:
-                    self.ngrams[ngram] = 1
+                    line_ngrams[ngram] = 1
+
+                self.ngrams.append(line_ngrams)
+
             # Otherwise len(words) - 3 number of 4-grams are possible
             else:
                 end_index = len(words) - 4
