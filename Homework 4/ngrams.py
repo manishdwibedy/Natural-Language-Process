@@ -20,7 +20,7 @@ class NGrams(object):
         # Reading the file
         self.readFile()
 
-        self.ngrams = []
+        self.ngrams = {}
 
         # For each of the lines
         for line in self.lines:
@@ -31,16 +31,22 @@ class NGrams(object):
             if len(words) < 4:
                 # The only n-gram
                 ngram = ' '.join(words).strip()
-                self.ngrams.append(ngram)
+
+                if ngram in self.ngrams:
+                    self.ngrams[ngram] += 1
+                else:
+                    self.ngrams[ngram] = 1
             # Otherwise len(words) - 3 number of 4-grams are possible
             else:
                 end_index = len(words) - 4
                 for index in range(0, end_index):
                     n_words = words[index:index+4]
                     ngram = ' '.join(n_words).strip()
-                    self.ngrams.append(ngram)
+                    if ngram in self.ngrams:
+                        self.ngrams[ngram] += 1
+                    else:
+                        self.ngrams[ngram] = 1
         print 'Done with the N-graming'
-        pass
 
 if __name__ == '__main__':
     file_location = 'data/candidate-1.txt'
