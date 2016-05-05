@@ -100,7 +100,6 @@ class ComputeBLEU(object):
                         for reference in self.reference_ngrams:
                             words_count = self.getWordCountLine(reference[lineIndex])
                             words_list.append(words_count)
-                            # a = self.getWordCountLine(line)
                         reference_word_count += min(words_list)
                         pass
 
@@ -128,7 +127,7 @@ class ComputeBLEU(object):
 
         return candidate_word_count, reference_word_count, result
 
-    def computeBLUE(self):
+    def computeBLEU(self):
         '''
 
         Computation of the BLEU score
@@ -177,5 +176,5 @@ class ComputeBLEU(object):
         target.write(str(bleu_score))
 if __name__ == '__main__':
     blue = ComputeBLEU()
-    blue.computeBLUE()
+    blue.computeBLEU()
     pass
