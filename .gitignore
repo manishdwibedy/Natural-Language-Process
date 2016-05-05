@@ -11,6 +11,9 @@
 # Just for checking the output
 /Homework 4/data/rough_work.txt
 
+# The output file
+/Homework 4/bleu_out.txt
+
 ### Python template
 # Byte-compiled / optimized / DLL files
 __pycache__/
