@@ -86,40 +86,48 @@ class ComputeBLEU(object):
                     ngram_BLEU_Score += line_BLEU_score
                 part_result = ngram_BLEU_Score / self.getWordCountFile(self.candidate_ngrams)
                 result.append(part_result)
-            return candidate_word_count, reference_word_count, result
+
         else:
-            candidate_length = 0
-            reference_length_list = []
+            reference_word_count = 0
             for n in self.nRange:
                 self.computeNgrams(n)
-                for reference in self.reference_ngrams:
+                if n == 1:
+                    candidate_word_count = self.getWordCountFile(self.candidate_ngrams)
 
-                    if n == 1:
-                        reference_length_list.append(self.getWordCountFile(reference))
-                        candidate_length = self.getWordCountFile(self.candidate_ngrams)
+                    reference_word_count = 0
+                    for lineIndex in range(len(self.candidate_ngrams)):
+                        words_list = []
+                        for reference in self.reference_ngrams:
+                            words_count = self.getWordCountLine(reference[lineIndex])
+                            words_list.append(words_count)
+                            # a = self.getWordCountLine(line)
+                        reference_word_count += min(words_list)
+                        pass
 
-                    ngram_BLEU_Score = 0
-                    for candidate_line_index, candidate_line in enumerate(self.candidate_ngrams):
-                        line_BLEU_score = 0
-                        reference_line = reference[candidate_line_index]
 
-                        for candidate_ngram, candidate_count in candidate_line.iteritems():
+                ngram_BLEU_Score = 0
+                for candidate_line_index, candidate_line in enumerate(self.candidate_ngrams):
+                    line_BLEU_score = 0
+                    for candidate_ngram, candidate_count in candidate_line.iteritems():
+
+                        maxCount = -1
+                        for reference in self.reference_ngrams:
+                            reference_line = reference[candidate_line_index]
+
                             # the ngram is present in the reference line, as well
                             if candidate_ngram in reference_line:
                                 count = min(candidate_count, reference[candidate_line_index][candidate_ngram])
-                                line_BLEU_score += float(count)
-                        ngram_BLEU_Score += line_BLEU_score
-                    part_result = ngram_BLEU_Score / self.getWordCountFile(self.candidate_ngrams)
-                    result.append(part_result)
-                    pass
+                                if count > maxCount:
+                                    maxCount = count
+                        else:
+                            if maxCount > 0:
+                                line_BLEU_score += float(maxCount)
+                    ngram_BLEU_Score += line_BLEU_score
+                part_result = ngram_BLEU_Score / self.getWordCountFile(self.candidate_ngrams)
+                result.append(part_result)
 
-            min_length = -1
-            distance_list = []
-            for reference_length in reference_length_list:
-               distance_list.append(reference_length - candidate_length)
 
-            min_distance = min(distance_list)
-            return candidate_length, candidate_length + min_distance, result
+        return candidate_word_count, reference_word_count, result
 
     def computeBLUE(self):
         '''
@@ -141,7 +149,7 @@ class ComputeBLEU(object):
 
     def computeBP(self, candidate_word_count, reference_word_count):
         if candidate_word_count <= reference_word_count:
-            ratio = reference_word_count / candidate_word_count
+            ratio = float(reference_word_count) / candidate_word_count
             bp = math.exp( 1 - ratio )
         else:
             bp = 1
