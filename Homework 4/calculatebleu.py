@@ -34,9 +34,11 @@ class ComputeBLEU(object):
         '''
         Computation of the N-grams of the reference file
         '''
-        ngram = ngrams.NGrams(n, self.reference_file).getNGrams()
 
-        self.reference_ngrams = ngram
+        # Dealing with a single reference file
+        if not self.multipleReferences:
+            ngram = ngrams.NGrams(n, self.reference_file).getNGrams()
+            self.reference_ngrams = ngram
 
     def computeNgrams(self, n):
         '''
