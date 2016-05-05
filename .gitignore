@@ -8,6 +8,9 @@
 # HMM Tagging Final output
 /Homework 3/hmmoutput.txt
 
+# Just for checking the output
+/Homework 4/data/rough_work.txt
+
 ### Python template
 # Byte-compiled / optimized / DLL files
 __pycache__/
