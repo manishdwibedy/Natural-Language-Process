@@ -39,6 +39,10 @@ class ComputeBLEU(object):
         if not self.multipleReferences:
             ngram = ngrams.NGrams(n, self.reference_file).getNGrams()
             self.reference_ngrams = ngram
+        else:
+            for root, dirs, files in os.walk(self.reference_file, topdown=False):
+                for name in files:
+                    print(os.path.join(root, name))
 
     def computeNgrams(self, n):
         '''
