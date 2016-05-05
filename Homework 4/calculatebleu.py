@@ -10,11 +10,11 @@ class ComputeBLEU(object):
     '''
     def __init__(self):
         self.nRange = range(1,5)
-        curretDirectory = os.path.dirname(os.path.abspath(__file__))
+        self.curretDirectory = os.path.dirname(os.path.abspath(__file__))
         if len(sys.argv) < 3:
             sys.exit('Usage: %s /path/to/candidate /path/to/reference' % sys.argv[0])
-        self.candidata_file = os.path.join(curretDirectory, sys.argv[1])
-        self.reference_file = os.path.join(curretDirectory, sys.argv[2])
+        self.candidata_file = os.path.join(self.curretDirectory, sys.argv[1])
+        self.reference_file = os.path.join(self.curretDirectory, sys.argv[2])
 
         if os.path.isdir(self.reference_file):
             self.multipleReferences = True
@@ -125,7 +125,6 @@ class ComputeBLEU(object):
                     ngram_BLEU_Score += line_BLEU_score
                 part_result = ngram_BLEU_Score / self.getWordCountFile(self.candidate_ngrams)
                 result.append(part_result)
-
 
         return candidate_word_count, reference_word_count, result
 
