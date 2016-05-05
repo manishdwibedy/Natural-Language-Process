@@ -30,7 +30,7 @@ class NGrams(object):
             if line[-1] == '.':
                 line = line[:-1]
             # computing the list of words
-            words = line.strip().split(' ')
+            words = line.strip().split()
 
             # If the words are less than 4, only one N-gram is possible
             if len(words) < self.n:
