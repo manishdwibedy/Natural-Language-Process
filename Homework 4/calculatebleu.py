@@ -61,11 +61,11 @@ class ComputeBLEU(object):
 
     def compute_blue_ngrams(self):
         if not self.multipleReferences:
-            return self.computeFile()
+            return self.compute_bleu_reference_file()
         else:
-            return self.computeDirectory()
+            return self.compute_bleu_reference_directory()
 
-    def computeFile(self):
+    def compute_bleu_reference_file(self):
         result = []
         for n in self.nRange:
             self.computeNgrams(n)
@@ -89,7 +89,7 @@ class ComputeBLEU(object):
             result.append(part_result)
         return candidate_word_count, reference_word_count, result
 
-    def computeDirectory(self):
+    def compute_bleu_reference_directory(self):
         result = []
         reference_word_count = 0
         for n in self.nRange:
