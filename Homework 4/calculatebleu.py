@@ -75,14 +75,14 @@ class ComputeBLEU(object):
 
                 ngram_BLEU_Score = 0
                 for candidate_line_index, candidate_line in enumerate(self.candidate_ngrams):
-                    line_BLEU_score = 0
+                    line_BLEU_score = 0.0
                     reference_line = self.reference_ngrams[candidate_line_index]
 
                     for candidate_ngram, candidate_count in candidate_line.iteritems():
                         # the ngram is present in the reference line, as well
                         if candidate_ngram in reference_line:
-                            count = min(candidate_count, self.reference_ngrams[candidate_line_index][candidate_ngram])
-                            line_BLEU_score += float(count)
+                            count = min(candidate_count, reference_line[candidate_ngram])
+                            line_BLEU_score += count
                     ngram_BLEU_Score += line_BLEU_score
                 part_result = ngram_BLEU_Score / self.getWordCountFile(self.candidate_ngrams)
                 result.append(part_result)
@@ -145,6 +145,7 @@ class ComputeBLEU(object):
         BLEU_Score = math.exp(BLEU_Score)
         BLEU_Score *= self.computeBP(candidate_word_count, reference_word_count)
         self.writeOutput(BLEU_Score)
+        print BLEU_Score
 
     def computeBP(self, candidate_word_count, reference_word_count):
         if candidate_word_count <= reference_word_count:
