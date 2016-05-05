@@ -144,7 +144,7 @@ class ComputeBLEU(object):
 
         BLEU_Score = math.exp(BLEU_Score)
         BLEU_Score *= self.computeBP(candidate_word_count, reference_word_count)
-        print BLEU_Score
+        self.writeOutput(BLEU_Score)
 
     def computeBP(self, candidate_word_count, reference_word_count):
         if candidate_word_count <= reference_word_count:
@@ -167,6 +167,13 @@ class ComputeBLEU(object):
             for ngram_token, count in ngram_line.iteritems():
                 word_count += count
         return word_count
+
+    def writeOutput(self, bleu_score):
+        file_name = 'bleu_out.txt'
+        file_location = os.path.join(self.curretDirectory, file_name)
+        target = open(file_location, 'w')
+
+        target.write(str(bleu_score))
 if __name__ == '__main__':
     blue = ComputeBLEU()
     blue.computeBLUE()
