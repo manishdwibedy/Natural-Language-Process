@@ -59,7 +59,7 @@ class ComputeBLEU(object):
         self.getCandidateNGrams(n)
         self.getReferenceNGrams(n)
 
-    def compute_blue_ngrams(self):
+    def compute_bleu_ngrams(self):
         if not self.multipleReferences:
             return self.compute_bleu_reference_file()
         else:
@@ -133,7 +133,7 @@ class ComputeBLEU(object):
         Computation of the BLEU score
         '''
 
-        candidate_word_count, reference_word_count, result = self.compute_blue_ngrams()
+        candidate_word_count, reference_word_count, result = self.compute_bleu_ngrams()
 
         BLEU_Score = 0
         for result_item in result:
